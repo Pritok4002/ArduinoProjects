@@ -1,0 +1,16 @@
+WH0802:
+14-d8
+13-d3
+12-d4
+6-d6
+4-d7
+5-GND
+1-GND
+GND-GND
+v-5v
+--------------
+BMP280
+SCL - A5
+SDA - A4
+VCC - 5V
+GND - GND

@@ -1,0 +1,5 @@
+# Syntax Coloring Map For Mapf
+
+# Functions (KEYWORD3)
+mapf_ADC    KEYWORD3
+mapf    KEYWORD3

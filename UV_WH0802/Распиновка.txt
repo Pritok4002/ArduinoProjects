@@ -1,0 +1,14 @@
+WH0802:
+14-d2
+13-d3
+12-d4
+6-d6
+4-d7
+5-GND
+1-GND
+GND-GND
+v-5v
+--------------
+GND- GND
+vcc-5v
+Signal-A0
