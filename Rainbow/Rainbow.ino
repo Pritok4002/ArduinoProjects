@@ -1,7 +1,8 @@
-//============================================
-// ADC demo for Larduino w/ LGT8F328D
-// Using new added internal 2.56V reference
-//============================================
+//#include "LiquidCrystalRus-master/LiquidCrystalRus.cpp"
+//LiquidCrystalRus lcd(7, 6, 5, 4, 3, 2);
+
+
+
 
 int16_t sensor1 = 0;
 int16_t sensor2 = 0;

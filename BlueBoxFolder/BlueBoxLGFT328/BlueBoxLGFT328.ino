@@ -49,22 +49,7 @@ bool PageButtonFlag = false;
 bool PageButton2Flag = false;
 bool Power = true;
 void setup() {
-  // put your setup code here, to run once:
-    pinMode(LED_BUILTIN, OUTPUT);
-  for(int i = 0; i < Morze.length(); i++)
-  {
-    if (Morze[i]=='.') {
-      digitalWrite(LED_BUILTIN, 1);
-      delay(interval1);
-      digitalWrite(LED_BUILTIN, 0);
-    }
-    else if (Morze[i]=='-'){
-      digitalWrite(LED_BUILTIN, 1);
-      delay(interval1*3);
-      digitalWrite(LED_BUILTIN, 0);
-    }
-    delay(interval1);
-  }
+  // put your setup code here, to run once:/
   Serial.begin(9600);
   Serial.println("BlueBoxLGFT328 V0.3 init");
   lcd.begin(8, 2);
