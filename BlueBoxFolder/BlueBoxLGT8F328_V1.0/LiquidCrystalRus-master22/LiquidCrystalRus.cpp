@@ -4,12 +4,7 @@
 #include <string.h>
 #include <inttypes.h>
 #include <avr/pgmspace.h>
-
-#if defined(ARDUINO) && ARDUINO >= 100
-  #include "Arduino.h"
-#else
-  #include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 // it is a russian alphabet translation
 // except 0401 --> 0xa2 = ╗, 0451 --> 0xb5
@@ -283,11 +278,8 @@ inline void LiquidCrystalRus::command(uint8_t value) {
   send(value, LOW);
 }
 
-#if defined(ARDUINO) && ARDUINO >= 100
-  size_t LiquidCrystalRus::write(uint8_t value)
-#else
-  void   LiquidCrystalRus::write(uint8_t value)
-#endif
+
+inline size_t LiquidCrystalRus::write(uint8_t value)
 {
   uint8_t out_char=value;
 
@@ -315,9 +307,8 @@ inline void LiquidCrystalRus::command(uint8_t value) {
   } else
     send(out_char, HIGH);
 
-#if defined(ARDUINO) && ARDUINO >= 100
   return 1; // assume sucess 
-#endif
+
 }
 
 /************ low level data pushing commands **********/
