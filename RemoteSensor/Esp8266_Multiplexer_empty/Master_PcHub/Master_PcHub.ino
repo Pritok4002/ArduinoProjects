@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
-
 #define MYPORT_TX 4
 #define MYPORT_RX 0
-
 EspSoftwareSerial::UART myPort;
+
+
 
 #include <ESP8266WiFi.h>
 #include <espnow.h>
@@ -13,9 +13,15 @@ uint16_t receivedData = 2048;  //данные полученные с датчи
 unsigned long lastTime = 0;
 unsigned long timerDelay = 1; // Интервал между отправками данных
 
+uint16_t SensorsValueArr[4] = {0, 0, 0, 0};
+
 void OnDataRecv(uint8_t *mac, uint8_t *data, uint8_t len) {
-  memcpy(&receivedData, data, sizeof(receivedData));
+  //memcpy(&receivedData, data, sizeof(receivedData));
+  memcpy(&SensorsValueArr, data, sizeof(SensorsValueArr));
 }
+
+
+
 void setup() {
   Serial.begin(489600);
   //Serial.begin(115200);
@@ -38,12 +44,7 @@ void setup() {
         start = end + 1;
         index++;
     }
-  //Serial.print(mac[0],HEX);
-  //Serial.print(mac[1],HEX);
-  //Serial.print(mac[2],HEX);
-  //Serial.print(mac[3],HEX);
-  //Serial.print(mac[4],HEX);
-  //Serial.println(mac[5],HEX);
+
   // Инициализируем Wi-Fi как режим Station
   WiFi.mode(WIFI_STA);
   // Инициализируем ESP-NOW
@@ -58,17 +59,47 @@ void setup() {
 myPort.write((byte *)&mac,sizeof(mac));
 
 }
+int16_t sensor1 = 0;
+int16_t sensor2 = 0;
+int16_t sensor3 = 0;
+int16_t sensor4 = 0;
 void loop() {
   if ((millis() - lastTime) > timerDelay) {
     lastTime = millis();
-    uint16_t sensor1 = receivedData;
+  sensor1 = SensorsValueArr[0];
+  sensor2 = SensorsValueArr[1];
+  sensor3 = SensorsValueArr[2];
+  sensor4 = SensorsValueArr[3];
   
-    byte sensor1_first = sensor1 & 0b0000000001111111;
-    byte sensor1_second = sensor1>>7;
-    sensor1_second = sensor1_second & 0b00011111;
-    sensor1_second = sensor1_second | 0b10000000;
-    Serial.write(sensor1_first);
-    Serial.write(sensor1_second);
+  byte sensor1_first = sensor1 & 0b0000000001111111;
+  byte sensor1_second = sensor1>>7;
+  sensor1_second = sensor1_second & 0b00011111;
+  sensor1_second = sensor1_second | 0b10000000;
+  Serial.write(sensor1_first);
+  Serial.write(sensor1_second);
+
+
+  byte sensor2_first = sensor2 & 0b0000000001111111;
+  byte sensor2_second = sensor2>>7;
+  sensor2_second = sensor2_second & 0b00011111;
+  sensor2_second = sensor2_second | 0b10100000;
+  Serial.write(sensor2_first);
+  Serial.write(sensor2_second);
+
+
+  byte sensor3_first = sensor3 & 0b0000000001111111;
+  byte sensor3_second = sensor3>>7;
+  sensor3_second = sensor3_second & 0b00011111;
+  sensor3_second = sensor3_second | 0b11000000;
+  Serial.write(sensor3_first);
+  Serial.write(sensor3_second);
+
+  
+  byte sensor4_first = sensor4 & 0b0000000001111111;
+  byte sensor4_second = sensor4>>7;
+  sensor4_second = sensor4_second & 0b00011111;
+  sensor4_second = sensor4_second | 0b11100000;
+  Serial.write(sensor4_first);
+  Serial.write(sensor4_second);
   }
-  
 }

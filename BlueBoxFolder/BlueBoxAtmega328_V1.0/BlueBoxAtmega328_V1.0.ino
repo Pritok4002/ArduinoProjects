@@ -40,9 +40,9 @@ void setup() {
 }
 
 void loop() {
-  int ADC_EC20k = analogRead(ECPin20k);
-  int ADC_EC2k = analogRead(ECPin2k);
-  int ADC_Ph = analogRead(PHPin);
+  
+  
+ 
 
 
 
@@ -63,13 +63,16 @@ void loop() {
 
   
   if (Page == 0) { //страница которая будет отображать электропроводность
+    int ADC_EC2k = analogRead(ECPin2k);
+    int ADC_EC20k = analogRead(ECPin20k);
     lcd.setCursor(0,0);        
-        if(ADC_EC20k>404)
+        if(ADC_EC20k>100)
         {
           lcd.setCursor(0,0);
           lcd.print("EEC20k        ");
           lcd.setCursor(0,1);
-          float EC20k_Converted = mapf(ADC_EC20k,124/4,2482/4,650,13200);
+          //float EC20k_Converted = mapf(ADC_EC20k,124/4,2482/4,650,13200);
+          float EC20k_Converted = (ADC_EC20k+1)*21.484375;
           lcd.print((int)min(EC20k_Converted,200000));
           lcd.print("      ");
         }
@@ -79,7 +82,8 @@ void loop() {
           lcd.print("EEC2k         ");
           lcd.setCursor(0,1);
           
-          float EC2k_Converted = mapf(ADC_EC2k,124/4,2482/4,65.0,1320.0);
+          //float EC2k_Converted = mapf(ADC_EC2k,124/4,2482/4,65.0,1320.0);
+          float EC2k_Converted = (ADC_EC2k+2)*2.1484375;
           lcd.print(max(0,EC2k_Converted),1);
           lcd.print("      ");
         }
@@ -93,6 +97,7 @@ void loop() {
         //Serial.println(EC2k_Converted);
   }
   else if (Page == 1) { //Страница PH
+  int ADC_Ph = analogRead(PHPin);
         lcd.setCursor(0,0);
         lcd.print("Ph           ");
         float Ph_Converted = mapf(ADC_Ph,621/4,2482/4,12.43,5.45);
@@ -110,7 +115,7 @@ void loop() {
         lcd.setCursor(0,0);
         lcd.print("temperature                 ");
         lcd.setCursor(0,1);
-        lcd.print(therm.getTempAverage(),2);
+        lcd.print(therm.getTempAverage()+0.7,2);
         lcd.print("       ");
 
   }

@@ -4,14 +4,14 @@
 
 
 
-int16_t sensor1 = 0;
-int16_t sensor2 = 0;
-int16_t sensor3 = 0;
-int16_t sensor4 = 0;
+int16_t sensor1 = 2048;
+int16_t sensor2 = 2048;
+int16_t sensor3 = 2048;
+int16_t sensor4 = 2048;
 void setup() {
   // put your setup code here, to run once:
   //analogReference(EXTERNAL);
-  analogReadResolution(12);
+  //analogReadResolution(12);
   pinMode(A0,INPUT);
   pinMode(A1,INPUT);
   pinMode(A2,INPUT);
@@ -23,10 +23,10 @@ void setup() {
 
 
 void loop() {
-  sensor1 = analogRead(A0);
-  sensor2 = analogRead(A1);
-  sensor3 = analogRead(A2);
-  sensor4 = analogRead(A3);
+  sensor1 = analogRead(A0)*4;
+  sensor2 = analogRead(A1)*4;
+  sensor3 = analogRead(A2)*4;
+  sensor4 = analogRead(A3)*4;
   
   byte sensor1_first = sensor1 & 0b0000000001111111;
   byte sensor1_second = sensor1>>7;

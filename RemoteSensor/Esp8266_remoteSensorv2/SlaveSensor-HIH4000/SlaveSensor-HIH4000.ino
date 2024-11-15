@@ -1,3 +1,7 @@
+double mapf(double x, double in_min, double in_max, double out_min, double out_max)
+{
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 #include <SoftwareSerial.h>
 
 #define MYPORT_TX 0
@@ -11,9 +15,9 @@ uint8_t mac[] = {0x11, 0x11, 0x11, 0x11, 0x11, 0x11};
 #include <ESP8266WiFi.h>
 #include <espnow.h>
 
-uint16_t SensorValue;
+int SensorValue;
 unsigned long lastTime = 0;
-unsigned long timerDelay = 1;
+unsigned long timerDelay = 10;
 
 bool ReadMac=true;
 
@@ -51,16 +55,24 @@ void setup() {
   esp_now_register_send_cb(OnDataSent);
   // Добавляем получателя (партнера) по указанному MAC-адресу
   esp_now_add_peer(mac, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+        Serial.print(mac[0],HEX);
+      Serial.print(mac[1],HEX);
+      Serial.print(mac[2],HEX);
+      Serial.print(mac[3],HEX);
+      Serial.print(mac[4],HEX);
+      Serial.println(mac[5],HEX);
 }
 void loop() {
   if ((millis() - lastTime) > timerDelay) {
-    // Заполняем структуру myData данными, которые хотим передат
-    // Отправляем структуру myData по протоколу ESP-NOW на указанный MAC-адрес получателя
-    SensorValue = analogRead(0);
-    SensorValue = (float)SensorValue*4*0.82;
+    SensorValue = analogRead(0)*1.18;
+    SensorValue = mapf(SensorValue,256,1000,948,3798);
+    SensorValue = min(max(SensorValue,0),4095);
+    Serial.print(SensorValue);
+    
     esp_now_send(mac, (uint8_t *)&SensorValue, sizeof(SensorValue));
     lastTime = millis();
   }
+  if(myPort.available())
      if (myPort.readBytes((byte*)&mac, sizeof(mac))) {
       Serial.print(mac[0],HEX);
       Serial.print(mac[1],HEX);
@@ -70,7 +82,5 @@ void loop() {
       Serial.println(mac[5],HEX);
       EEPROM.put(0, mac);
       EEPROM.commit();
-      
       }
- 
 }
