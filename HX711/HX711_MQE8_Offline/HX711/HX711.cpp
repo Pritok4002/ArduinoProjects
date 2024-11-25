@@ -39,7 +39,7 @@ void HX711::reset()
   power_up();
   _offset   = 0;
   _scale    = 1;
-  _gain     = HX711_CHANNEL_A_GAIN_128;
+  _gain     = HX711_CHANNEL_A_GAIN_64;
   _lastRead = 0;
   _mode     = HX711_AVERAGE_MODE;
 }

@@ -1,0 +1,2 @@
+ft232 - atmega328
+tx - rx
