@@ -27,7 +27,7 @@ void loop()
   lcd.setCursor(0, 0);    //Курсор на первой строке
   lcd.print(temperatureC); //ИНТЕРВАЛ
   lcd.setCursor(0, 1);    //Курсор на первой строке
-  lcd.print(analogRead(0)); //ИНТЕРВАЛ
+  lcd.print("qwer1234"); //ИНТЕРВАЛ
   lcd.print("        ");
 
   delay(100);

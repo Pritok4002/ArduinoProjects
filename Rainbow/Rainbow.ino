@@ -23,7 +23,7 @@ void setup() {
 
 
 void loop() {
-  sensor1 = analogRead(A0)*4;
+  sensor1 = analogRead(A1)*4;
   sensor2 = analogRead(A1)*4;
   sensor3 = analogRead(A2)*4;
   sensor4 = analogRead(A3)*4;
